@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../view_model/homeVM.dart';
 
@@ -146,27 +147,27 @@ class WeatherUtils{
 
     return Colors.white.withValues(alpha: .2);
   }
-  static IconData getWeatherIcon(HomeVM homeVM, int selectedHourIndex) {
+  static String getWeatherIcon(HomeVM homeVM, int selectedHourIndex) {
     final selectedHourData =getSelectedHourData(homeVM,selectedHourIndex);
     final condition = selectedHourData?.condition?.text?.toLowerCase() ??
         homeVM.weather.value.current?.condition?.text?.toLowerCase() ?? '';
     final isDay = selectedHourData?.isDay == 1 ;
 
     if (condition.contains('rain') || condition.contains('drizzle')) {
-      return Icons.grain;
+      return "assets/lottee/rain.json";
     } else if (condition.contains('cloud') || condition.contains('overcast')) {
-      return Icons.cloud;
+      return "assets/lottee/clouds.json";
     } else if (condition.contains('snow')) {
-      return Icons.ac_unit;
+      return "assets/lottee/weather.json";
     } else if (condition.contains('sunny') || (condition.contains('clear') && isDay)) {
-      return Icons.wb_sunny;
+      return "assets/lottee/s.json";
     } else if (condition.contains('clear') && !isDay) {
-      return Icons.nights_stay;
+      return "assets/lottee/cn.json";
     } else if (condition.contains('thunder')) {
-      return Icons.flash_on;
+      return "assets/lottee/thunder.json";
     }
 
-    return isDay ? Icons.wb_sunny : Icons.nights_stay;
+    return isDay ?"assets/lottee/weather.json" : "assets/lottee/weather.json";
   }
 
 

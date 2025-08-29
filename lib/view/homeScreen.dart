@@ -1,6 +1,7 @@
 import 'package:breeze/res/assets/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import '../res/urls/weatherUtils.dart';
 import '../view_model/homeVM.dart';
 
@@ -43,51 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
           gradient: WeatherUtils.getBackgroundGradient(_homeVM,selectedHourIndex.value),
         ),
+
         child: Stack(
           children: [
-            // Custom App Bar
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: SafeArea(
-                child: Container(
-                  height: 60,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: .1),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: .1),
-                        blurRadius: 10,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Spacer(),
-                      Visibility(
-                        visible: _homeVM.search.value,
-                        child: IconButton(
-                          onPressed: () {
-                            _homeVM.search.value = false;
-                          },
-                          icon: Icon(
-                            Icons.close,
-                            color: WeatherUtils.getTextColor(_homeVM,selectedHourIndex.value),
-                            size: 28,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            // Main Content
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.only(top: 60),
@@ -97,18 +56,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     // Weather Icon - Updates based on selected hour
                     Obx(() => Container(
-                      margin: const EdgeInsets.only(bottom: 20),
-                      child: Icon(
-                        WeatherUtils.getWeatherIcon(_homeVM,selectedHourIndex.value),
-                        size: 100,
-                        color: WeatherUtils.getTextColor(_homeVM,selectedHourIndex.value).withValues(alpha: .9),
-                      ),
+                        width: 530,
+                        margin: const EdgeInsets.only(bottom: 20),
+                        child: Lottie.asset(WeatherUtils.getWeatherIcon(_homeVM,selectedHourIndex.value),
+                            height: 250
+                        )
+                      // child: Icon(
+                      //   WeatherUtils.getWeatherIcon(_homeVM,selectedHourIndex.value),
+                      //   size: 100,
+                      //   color: WeatherUtils.getTextColor(_homeVM,selectedHourIndex.value).withValues(alpha: .9),
+                      // ),
                     )),
 
                     // Temperature - Show selected hour data
                     Obx(() => Text(
                       _homeVM.weather.value.current == null
-                          ? "Loading..."
+                          ? "Breeze"
                           : WeatherUtils.getSelectedHourData(_homeVM,selectedHourIndex.value) != null
                           ? "${WeatherUtils.getSelectedHourData(_homeVM,selectedHourIndex.value).tempC?.round()}°C"
                           : "${_homeVM.weather.value.current!.tempC.toString()}°C",
@@ -227,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         margin: const EdgeInsets.symmetric(horizontal: 16),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Colors.white.withValues(alpha: .1),
+                          // color: Colors.white.withValues(alpha: .1),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withValues(alpha: .1),
@@ -264,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       // Time
                                       Text(
-                                        hourData.time!.split(" ")[1],
+                                        Constants.times[index],
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,
@@ -401,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // Search Input
             Positioned(
-              bottom: 100,
+              top: 60,
               left: 16,
               right: 16,
               child: Container(
