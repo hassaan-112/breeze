@@ -2,7 +2,7 @@
 
 Breeze is a modern and interactive weather app built in **Flutter** as part of my **7 Days – 7 Apps Challenge (Day 7)**.  
 It combines a clean UI with real-time weather data to provide users with an engaging experience.
-
+ 
 ---
 
 ## ✨ Features
